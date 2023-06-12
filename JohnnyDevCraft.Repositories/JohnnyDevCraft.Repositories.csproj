@@ -4,6 +4,25 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Version>22.2.6</Version>
+        <Title>JDC Repositories</Title>
+        <Description>
+            This repository library makes it easy to build repositories for WebAPI applications that can be
+            extended with clean and consise patters for quering data.
+
+            It handles most of the boiler plate code for Repositories based on EF Core 7.  It also includes the ability 
+            to use the DevExpress DataLoader to get data from your repo.
+        </Description>
+        <Copyright>JohnnyDevCraft</Copyright>
+        <RepositoryUrl>https://github.com/JohnnyDevCraft/JohnnyDevCraft.Repositories</RepositoryUrl>
+        <RepositoryType>GIT C#</RepositoryType>
+        <PackageTags>EntityFrameworkCore, DevExpressData, DataLoader, RepositoryPattern</PackageTags>
+        <PackageIcon>icon.jpg</PackageIcon>
+        <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>JohnnyDevCraft</Authors>
+        <PackageProjectUrl>https://github.com/JohnnyDevCraft/JohnnyDevCraft.Repositories</PackageProjectUrl>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,6 +31,23 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
         <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Update="icon.ico">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="icon.jpg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="icon.jpg" Pack="true" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Resources" />
     </ItemGroup>
 
 </Project>
