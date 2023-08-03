@@ -10,7 +10,7 @@ namespace JohnnyDevCraft.Repositories.Implementation;
 
 public class BaseRepository<T, TKey>: IBaseRepository<T, TKey> where T: class, IIdentifiableEntity<TKey>
 {
-    private readonly DbContext _db;
+    protected readonly DbContext _db;
     
     private List<Action<DbSet<T>>> _modifiers;
     protected BaseRepository(DbContext db)
@@ -44,7 +44,7 @@ public class BaseRepository<T, TKey>: IBaseRepository<T, TKey> where T: class, I
         }
     }
 
-    private DbSet<T> GetSet()
+    protected DbSet<T> GetSet()
     {
         var set = _db.Set<T>();
         foreach (var modifier in _modifiers)
@@ -68,6 +68,14 @@ public class BaseRepository<T, TKey>: IBaseRepository<T, TKey> where T: class, I
     public async Task<T> AddAsync(T? model, CancellationToken cancellationToken = default(CancellationToken))
     {
         var created = GetSet().Add(model);
+        await _db.SaveChangesAsync(cancellationToken);
+        SetupForSave(model);
+        return created.Entity;
+    }
+
+    public async Task<T> AddBatchAsync(IEnumerable<T>? models, CancellationToken cancellationToken = default(CancellationToken))
+    {
+        var created = GetSet().AddRange(models);
         await _db.SaveChangesAsync(cancellationToken);
         SetupForSave(model);
         return created.Entity;
