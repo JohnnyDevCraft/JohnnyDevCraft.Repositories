@@ -4,7 +4,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Version>23.1.4-Beta1</Version>
+        <Version>23.1.5-Beta1</Version>
         <Title>JDC Repositories</Title>
         <Description>
             This repository library makes it easy to build repositories for WebAPI applications that can be
