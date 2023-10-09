@@ -10,9 +10,13 @@ public interface IBaseRepository<T, Tkey> where T: class
     Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken));
     Task<T> GetAsync(Tkey key);
     Task<T> AddAsync(T model, CancellationToken cancellationToken = default(CancellationToken));
+
+    Task<IEnumerable<T>> AddBatchAsync(IEnumerable<T> models,
+        CancellationToken cancellationToken = default(CancellationToken));
     Task<T> UpdateAsync(Tkey key, T model, CancellationToken cancellationToken = default(CancellationToken));
     Task<T> PatchAsync(Tkey key, dynamic model, CancellationToken cancellationToken = default(CancellationToken));
     Task DeleteAsync(Tkey key, CancellationToken cancellationToken = default(CancellationToken));
+    Task DeleteBatchAsync(IEnumerable<Tkey> keys, CancellationToken cancellationToken = default(CancellationToken));
     Task<LoadResult> LoadDataAsync(DataSourceLoadOptionsBase options, CancellationToken cancellationToken = default(CancellationToken));
     IQueryable<T> GetQueryable();
 }

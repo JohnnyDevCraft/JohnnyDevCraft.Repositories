@@ -73,12 +73,14 @@ public class BaseRepository<T, TKey>: IBaseRepository<T, TKey> where T: class, I
         return created.Entity;
     }
 
-    public async Task<T> AddBatchAsync(IEnumerable<T>? models, CancellationToken cancellationToken = default(CancellationToken))
+    public async Task<IEnumerable<T>> AddBatchAsync(IEnumerable<T> models, CancellationToken cancellationToken = default(CancellationToken))
     {
-        var created = GetSet().AddRange(models);
+        GetSet().AddRange(models);
         await _db.SaveChangesAsync(cancellationToken);
-        SetupForSave(model);
-        return created.Entity;
+        foreach (var model in models)
+            SetupForSave(model);
+        
+        return models;
     }
 
     public virtual async Task<T> UpdateAsync(TKey key, T model, CancellationToken cancellationToken = default(CancellationToken))
@@ -104,6 +106,16 @@ public class BaseRepository<T, TKey>: IBaseRepository<T, TKey> where T: class, I
         var original = await GetAsync(key);
         ValidateAccess(original);
         GetSet().Remove(original);
+        await _db.SaveChangesAsync(cancellationToken);
+    }
+    
+    public async Task DeleteBatchAsync(IEnumerable<TKey> keys, CancellationToken cancellationToken = default(CancellationToken))
+    {
+        var models = await GetQueryable().Where(v => keys.Contains(v.Id)).ToListAsync(cancellationToken);
+        foreach (var model in models)
+            ValidateAccess(model);
+        
+        GetSet().RemoveRange(models);
         await _db.SaveChangesAsync(cancellationToken);
     }
 
